@@ -1,6 +1,6 @@
 # Interpretable Matrix Completion
 
-This is the code respoitory for the paper "Interpretable Matrix Completion: A Discrete Optimization Approach". 
+This is the code repository for the paper "Interpretable Matrix Completion: A Discrete Optimization Approach". 
 
 ## Synthetic Experiments
 
