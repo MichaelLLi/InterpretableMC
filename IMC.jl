@@ -195,6 +195,8 @@ function Cutting_plane_full(A,B,W,z0,k,γ,M)
 end
 
 
+
+# Simulation Experiment Example
 n = 20000
 m = 1000
 p = 50
@@ -212,3 +214,32 @@ t1 = time_ns()
 Uopt,Vopt=MatrixOptIntDirect(A,B,k,100)
 println((time_ns()-t1)/1e9)
 mean(abs.(Uopt*Vopt'.-Afull)./abs.(Afull))
+
+
+# Netflix Data Example
+A=readtable("Netflix_5000_200_train.csv")
+[A[nm]=convert(DataArray{Float64},A[nm]) for nm in names(A)]
+[A[isna.(A[nm]),nm]=NaN for nm in names(A)]
+A=convert(Array{Float64},A)
+B=readtable("Netflix_5000_200_features.csv")
+B[:intercept]=1
+B=convert(Array{Float64},B)
+A=A[:,2:end]
+k=6
+tic()
+Aopt,zopt,t=MatrixOpt(A,B,k,1,true)
+toc()
+Atest=readtable("Netflix_5000_200_test.csv")
+peopleid=readtable("Netflix_5000_200_train.csv")[:,1]
+movieid=convert(Array{Int64},readtable("Netflix_5000_200_train.csv",header=false)[1,2:end])
+error=0
+j=0
+for i=1:size(Atest)[1]
+    rownum=find(peopleid.==Atest[:Cust_Id][i])
+    colnum=find(movieid.==Atest[:Movie_Id][i])
+    if !isempty(rownum)
+        error+=(abs(Aopt[rownum,colnum]-Atest[:Rating][i])/Atest[:Rating][i])[1,1]
+        j=j+1
+    end
+end
+error=error/j

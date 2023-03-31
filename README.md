@@ -1,4 +1,4 @@
-# InterpretableMC
+# Interpretable Matrix Completion
 
 This is the code respoitory for the paper "Interpretable Matrix Completion: A Discrete Optimization Approach". 
 
@@ -13,3 +13,7 @@ It has been tested on Julia V1.4, and we provide a demonstration code on how one
 
 To replicate the real data experiments, please download the Netflix Prize Data from e.g. https://www.kaggle.com/datasets/netflix-inc/netflix-prize-data, and 
 the corresponding TMDB data using the API endpoint https://www.themoviedb.org/documentation/api?language=en-US.
+
+Then the algorithm can be ran according to the demonstration code in IMC.jl. 
+
+If there are any questions, please reach out to Michael Lingzhi Li at mili@hbs.edu. 
